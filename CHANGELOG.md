@@ -1,8 +1,47 @@
-mangohud-gtr9-pro Changelog
+mangohud-gtr9-pro ChangeLog
 ===========================
 
+v1.0.2 - 2026-05-16
+-------------------
 
-v1.0.1 (2026-05-10)
+Documentation and packaging cleanup. No runtime behaviour change.
+
+  * doc: README — fix UMA caveat. `vram` column reflects the BIOS-carved
+    UMA Frame Buffer Size (`mem_info_vram_total`), not anything governed
+    by `amdttm.pages_limit`. The BIOS carveout and the TTM/GTT shared
+    pool are independent regions. Table added distinguishing the two.
+  * doc: README — correct kernel parameter per module source: mainline
+    in-kernel amdgpu uses `ttm.pages_limit`; out-of-tree `amdgpu-dkms`
+    uses `amdttm.pages_limit` (ROCm#5562). Kernel >= 6.16.9 makes both
+    unnecessary (ROCm#5444).
+  * doc: README — verify-step `xdotool key shift+F2` removed (X11-only;
+    cannot reach Wayland-native windows). Replaced with manual press
+    plus a `ydotool` pointer for users needing synthetic input.
+  * doc: README — guard empty-glob hang in the log-readout step:
+    `set -l latest (ls -t ...); test -n "$latest"; and head -n 30 $latest`.
+  * doc: README — RAPL `chmod o+r` is non-persistent (sysfs regenerates
+    at boot). Added `/etc/tmpfiles.d/99-rapl-readable.conf` snippet
+    matching `ry-install`'s `tmpfiles.d` convention. CVE-2020-8694 and
+    CVE-2020-8695 cited for Platypus mitigation context.
+  * doc: README — install collapsed from `install -m + sed -i` to
+    `mkdir + sed > dst + chmod`. Eliminates stale-`USERNAME` window
+    and is idempotent on re-run.
+  * doc: README — junction-temp reliability attributed to amdgpu kernel
+    module version, not Mesa version (per symptom pattern in upstream
+    MangoHud#2001).
+  * doc: README — added **Known issues**, **Troubleshooting**, and
+    **References** sections matching `ry-install` structure.
+  * doc: README — admonitions migrated to GitHub style (`[!NOTE]`,
+    `[!CAUTION]`, `[!IMPORTANT]`, `[!TIP]`).
+  * conf: prose comments removed; section headers, directives, and
+    operational hints retained (USERNAME-substitution sed, intentionally-
+    OFF list, gamescope#1917 rationale for `fps_limit_method=late`).
+  * conf: `fps_limit_method` rationale narrowed to gamescope's Wayland
+    backend (gamescope#1917); decision (`late`) unchanged.
+  * doc: CHANGELOG — title harmonised to `ChangeLog`; headers
+    `vN.N - YYYY-MM-DD`; single-blank separators (kernel.org style).
+
+v1.0.1 - 2026-05-10
 -------------------
 
 Resync release — corrects directive forms to match upstream MangoHud master
@@ -36,8 +75,7 @@ the canonical upstream syntax.
   Compatibility: requires MangoHud `>= 0.8.3`; CachyOS `cachyos-extra-v4/
   mangohud-0.8.3-2.1` and Arch `extra/mangohud 0.8.3-2` both qualify.
 
-
-v1.0.0 (2026-05-10)
+v1.0.0 - 2026-05-10
 -------------------
 
 Initial release. Horizontal, top-left-anchored MangoHud configuration for
