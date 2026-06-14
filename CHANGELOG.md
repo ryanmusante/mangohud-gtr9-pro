@@ -9,16 +9,19 @@ common gamer layout with temperatures.
 
   * conf: added `horizontal`; `position` stays at the top (`top-left`).
     Layout is now FPS + frametime + frame_timing graph, GPU load +
-    `gpu_temp`, CPU load + `cpu_temp`, and `vram` + `ram`. Dropped
-    `gpu_power`, `proc_vram`, and `round_corners` to match the popular
-    minimal set. Style kept minimal (`font_size=20`,
-    `background_alpha=0.4`, `text_outline`); single toggle keybind.
-    Net 15 active directives.
+    `gpu_core_clock` + `gpu_mem_clock` + `gpu_temp`, CPU load +
+    `cpu_mhz` + `cpu_temp`, `vram` + `ram`, and `throttling_status` +
+    `throttling_status_graph` (active-throttling indicator, shown only
+    while throttling occurs). Dropped `gpu_power`, `proc_vram`, and
+    `round_corners` to match the popular minimal set. Style kept minimal
+    (`font_size=20`, `background_alpha=0.4`, `text_outline`); single
+    toggle keybind. Net 20 active directives, all readout-only.
   * doc: README description updated from vertical to horizontal. Added
     an "Example output" section showing the rendered top bar with a
-    legend mapping each column to its directive, plus a note on moving
-    the bar with `position`. Files tree and version badge bumped to
-    1.1.0.
+    legend mapping each column to its directive (including the GPU/CPU
+    clocks and the conditional throttling indicator), plus a note on
+    moving the bar with `position`. Files tree and version badge bumped
+    to 1.1.0.
 
 v1.0.2 - 2026-05-16
 -------------------
