@@ -1,83 +1,63 @@
 # mangohud-gtr9-pro
 
-[![version](https://img.shields.io/badge/version-1.6.1-blue.svg)](CHANGELOG.md)
+[![version](https://img.shields.io/badge/version-1.7.0-blue.svg)](CHANGELOG.md)
 [![mangohud](https://img.shields.io/badge/mangohud-%E2%89%A5%200.8.3-f5af19.svg)](https://github.com/flightlessmango/MangoHud)
 [![license](https://img.shields.io/badge/license-MIT-green.svg)](#license)
 
-Expanded MangoHud config for the Beelink GTR9 Pro (Ryzen AI Max+ 395 / Radeon 8060S, RDNA 3.5 / Strix Halo) on CachyOS Wayland with RADV. A horizontal top-of-screen bar built with MangoHud's `horizontal` layout directive (equivalent to its Horizontal preset, `preset=2`) and a diagnostics-oriented metric set: FPS with 1% / 0.1% lows, frametime (+ graph), GPU load with clocks and edge/memory temperatures, render resolution, CPU load with frequency and temperature, and the full UMA memory triad (`vram` + `ram` + `swap`). Every directive is readout-only — nothing here changes frame pacing, vsync, or rendering. The metric labels render uppercase; only MangoHud's fixed unit suffixes (`ms`, `MHz`, `GiB`) carry mixed case, which no config option can change.
+All-uppercase, readout-only MangoHud config for the Beelink GTR9 Pro (Radeon 8060S / Strix Halo) on CachyOS Wayland with RADV. A single horizontal top bar: FPS with frametime and 1% / 0.1% lows, a frametime graph, GPU and CPU load with clocks and temperatures, the unified `vram` / `ram` / `swap` pool, and render resolution. Display-only — nothing changes frame pacing or rendering.
 
-## Table of contents
-
-- [Compatibility](#compatibility)
-- [Install](#install)
-- [Usage](#usage)
-- [Example output](#example-output)
-- [Metrics](#metrics)
-- [Files](#files)
-- [License](#license)
-
-## Compatibility
-
-| Component | Required |
-|---|---|
-| MangoHud | `≥ 0.8.3` |
-| Kernel   | `≥ 6.14` |
-| Vulkan   | RADV (Mesa 24.x+) |
+Uppercase is done with a bundled font (`GTR9-Caps-Mono.ttf`, set via `font_file`): MangoHud has no uppercase option and renders `ms`, `MHz`, `GiB`, and labels like `Resolution` as fixed mixed-case strings, so the font remaps lowercase glyphs to uppercase. `legacy_layout=0` keeps the on-screen order identical to the config.
 
 ## Install
 
+Needs MangoHud ≥ 0.8.3, kernel ≥ 6.14, RADV (Mesa 24+). Copy the config and the bundled font:
+
 ```fish
 mkdir -p ~/.config/MangoHud
-cp ./MangoHud.conf ~/.config/MangoHud/MangoHud.conf
+cp ./MangoHud.conf      ~/.config/MangoHud/
+cp ./GTR9-Caps-Mono.ttf ~/.config/MangoHud/
 ```
 
-## Usage
+`font_file` uses `~/`, which MangoHud expands; edit it if you install the font elsewhere.
 
-Steam launch options:
+## Usage
 
 ```
 mangohud %command%
 gamemoderun mangohud %command%
 ```
 
-Toggle in-game: `Shift_R + F12`.
+Toggle with `Shift_R + F12`. Move the bar with `position=top-center` or `top-right`.
 
-The bar is anchored top-left by default; set `position=top-center` (or `top-right`) in `MangoHud.conf` to move it along the top edge.
-
-## Example output
-
-A single horizontal row across the top of the screen (values are sample data; clocks in MHz, temperatures in Celsius):
+## Example
 
 ```
-118 FPS  AVG 121  1% 84  0.1% 71  │  8.5 MS ▁▂▃▁▂▁  │  GPU 96%  2901 MHZ  2400 MHZ  74°C  MEM 70  3840X2160  │  CPU 38%  4102 MHZ  66°C  │  VRAM 6.5 GIB  RAM 13.2 GIB  SWAP 0.0 GIB
+118 FPS 8.5 MS  │  AVG 121 FPS  1% 84 FPS  0.1% 71 FPS  │  ▁▂▃▁▂▁  │  GPU 96%  74°C  2901 MHZ  │  CPU 38%  66°C  4102 MHZ  │  VRAM 6.5 GIB  70°C  2400 MHZ  │  RAM 13.2 GIB  0.0 GIB  │  RESOLUTION 3840X2160
 ```
 
 ![Example MangoHud bar](example.png)
 
+Column spacing and the engine label before FPS are set by MangoHud at runtime; the casing and element order are fixed by the config.
+
 ## Metrics
 
-| Directive | Shows |
+| Directives | Shows |
 |---|---|
-| `fps` + `fps_metrics=avg,1,0.1` | current FPS plus average, 1% low, and 0.1% low |
-| `frametime` | frametime in milliseconds |
-| `frame_timing` | inline frametime line graph (stutter spikes) |
-| `gpu_stats` + `gpu_core_clock` + `gpu_mem_clock` | GPU load and core / memory clocks |
-| `gpu_temp` + `gpu_mem_temp` | GPU edge and memory temperatures |
-| `resolution` | current render resolution |
-| `cpu_stats` + `cpu_mhz` + `cpu_temp` | CPU load, frequency, and temperature |
-| `vram` + `ram` + `swap` | unified memory pool usage and swap |
+| `fps` `frametime` `fps_metrics=avg,1,0.1` `frame_timing` | FPS and frametime, 1% / 0.1% lows, frametime graph |
+| `gpu_stats` `gpu_temp` `gpu_core_clock` | GPU load, edge temperature, core clock |
+| `cpu_stats` `cpu_temp` `cpu_mhz` | CPU load, package temperature, frequency |
+| `vram` `gpu_mem_temp` `gpu_mem_clock` `ram` `swap` | unified pool: VRAM + memory temp/clock, RAM + swap |
+| `resolution` | render resolution |
 
-Notes:
-- `gpu_junction_temp` is omitted: on this APU (gfx1151) the junction/hotspot sensor mirrors the edge value that `gpu_temp` already reports, so it would only duplicate the GPU temperature.
-- `gpu_mem_clock` and `gpu_mem_temp` require `vram` (enabled).
-- The GTR9 Pro shares a single LPDDR5X pool between CPU and GPU, so `vram` and `ram` draw from the same unified memory.
-- Driver, GPU-name, and engine readouts (`vulkan_driver`, `gpu_name`, `engine_version`) are intentionally omitted: they are the only free-form strings MangoHud renders in lowercase, and there is no option to force them uppercase.
+`gpu_mem_temp` and `gpu_mem_clock` render inside the VRAM group and `swap` as a bare value after RAM, since the GTR9 Pro shares one LPDDR5X pool between CPU and GPU; both memory readouts require `vram`.
 
 ## Files
 
 ```
 mangohud-gtr9-pro/
 ├── CHANGELOG.md
+├── FONT-LICENSE
+├── GTR9-Caps-Mono.ttf
 ├── MangoHud.conf
 ├── README.md
 └── example.png
@@ -85,4 +65,4 @@ mangohud-gtr9-pro/
 
 ## License
 
-MIT
+MIT, except the bundled `GTR9-Caps-Mono.ttf`, a DejaVu Sans Mono derivative licensed separately under the Bitstream Vera Fonts Copyright — see [FONT-LICENSE](FONT-LICENSE).
