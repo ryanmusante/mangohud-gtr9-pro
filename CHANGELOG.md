@@ -1,17 +1,20 @@
 mangohud-gtr9-pro changelog
 
-1.7.0 (2026-06-14)
-- Force all HUD text uppercase with a bundled font (GTR9-Caps-Mono.ttf,
-  loaded via font_file). MangoHud has no uppercase option and renders ms,
-  MHz, GiB, and the Resolution label as fixed mixed-case strings; the font
-  remaps lowercase glyphs to uppercase, so every string renders in caps.
-- Add legacy_layout=0 so the bar follows the order written in the file.
-  Regroup all directives into labelled sections. 24 directives, all
-  readout-only.
-- Correct the docs to match real rendering: memory temp and clock render
-  in the VRAM group, swap as a bare value after RAM, resolution uses a
-  lowercase-x separator, fps metrics carry an FPS suffix. Add the font
-  install step, FONT-LICENSE, and a license note.
+1.8.0 (2026-06-14)
+- Sync docs to MangoHud.conf as the source of truth. The config is a
+  plain readout-only bar of 19 directives with no uppercase font, so
+  remove every doc reference that the config does not implement.
+- Drop the bundled uppercase font (GTR9-Caps-Mono.ttf), the font_file
+  install step, FONT-LICENSE, and the license carve-out; the config sets
+  no font_file and renders MangoHud's default mixed-case strings.
+- Drop fps_metrics (1% / 0.1% lows), cpu_temp, gpu_mem_temp, and
+  resolution from the metrics table, prose, and example; none are present
+  in the config.
+- Remove example.png and its README embed. The previous image depicted
+  the old uppercase build (lows, CPU/VRAM temps, resolution) and could
+  not be regenerated accurately without a real capture, so the example
+  is now a text sketch of element order only.
+- Correct the directive count to 19, all readout-only.
 
 1.6.2 (2026-06-14)
 - Re-render example.png in one font, one size, one color.
