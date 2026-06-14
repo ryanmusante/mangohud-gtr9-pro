@@ -1,6 +1,24 @@
 mangohud-gtr9-pro ChangeLog
 ===========================
 
+v1.2.0 - 2026-06-14
+-------------------
+
+Removed the throttling indicator; pure performance/sensor readout.
+
+  * conf: dropped `throttling_status` and `throttling_status_graph`.
+    Remaining layout is FPS + frametime + frame_timing graph, GPU load +
+    `gpu_core_clock` + `gpu_mem_clock` + `gpu_temp`, CPU load + `cpu_mhz`
+    + `cpu_temp`, and `vram` + `ram`. Style and the single toggle keybind
+    are unchanged. Net 18 active directives, all readout-only.
+  * doc: README description, "Example output" preamble, and the legend
+    table updated to drop the throttling row. Version badge bumped to
+    1.2.0.
+  * Verified against upstream MangoHud master config and the 0.8.3/0.8.4
+    release notes (current release is 0.8.4, May 2026). All directives
+    remain valid and display-only; none come from the PERFORMANCE or
+    WORKAROUNDS sections.
+
 v1.1.0 - 2026-06-03
 -------------------
 

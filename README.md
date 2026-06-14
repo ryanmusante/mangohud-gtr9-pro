@@ -1,10 +1,10 @@
 # mangohud-gtr9-pro
 
-[![version](https://img.shields.io/badge/version-1.1.0-blue.svg)](CHANGELOG.md)
+[![version](https://img.shields.io/badge/version-1.2.0-blue.svg)](CHANGELOG.md)
 [![mangohud](https://img.shields.io/badge/mangohud-%E2%89%A5%200.8.3-f5af19.svg)](https://github.com/flightlessmango/MangoHud)
 [![license](https://img.shields.io/badge/license-MIT-green.svg)](#license)
 
-Minimal MangoHud config for the Beelink GTR9 Pro (Ryzen AI Max+ 395 / Radeon 8060S, RDNA 3.5 / Strix Halo) on CachyOS Wayland with RADV. A horizontal top-of-screen bar in the style of MangoHud's built-in Horizontal preset (`preset=2`), trimmed to a popular metric set with sensor detail: FPS, frametime (+ graph), GPU/CPU load with clocks and temperature, UMA-aware memory (`vram` + `ram`), and an active-throttling indicator (+ graph).
+Minimal MangoHud config for the Beelink GTR9 Pro (Ryzen AI Max+ 395 / Radeon 8060S, RDNA 3.5 / Strix Halo) on CachyOS Wayland with RADV. A horizontal top-of-screen bar in the style of MangoHud's built-in Horizontal preset (`preset=2`), trimmed to a popular metric set with sensor detail: FPS, frametime (+ graph), GPU/CPU load with clocks and temperature, UMA-aware memory (`vram` + `ram`).
 
 ## Table of contents
 
@@ -45,7 +45,7 @@ The bar is anchored top-left by default; set `position=top-center` (or `top-righ
 
 ## Example output
 
-A single horizontal row across the top of the screen (layout and values illustrative; clocks in MHz, temperatures in Celsius). The throttling indicator only appears while throttling is actually happening, so it is usually absent:
+A single horizontal row across the top of the screen (layout and values illustrative; clocks in MHz, temperatures in Celsius):
 
 ```
 GPU  96%  2.9 GHz  74°C     CPU  38%  4.1 GHz  66°C     VRAM  6.5 GiB     RAM  13.2 GiB     118 FPS     8.5 ms    ▁▂▁▁▃▂▁▁
@@ -60,7 +60,6 @@ GPU  96%  2.9 GHz  74°C     CPU  38%  4.1 GHz  66°C     VRAM  6.5 GiB     RAM 
 | `VRAM 6.5 GiB` / `RAM 13.2 GiB` | `vram` + `ram` (shared from the APU's unified memory pool) |
 | `118 FPS` / `8.5 ms` | `fps` + `frametime` |
 | `▁▂▁▁▃▂▁▁` | `frame_timing` inline frametime graph |
-| (only when throttling) | `throttling_status` + `throttling_status_graph` |
 
 ## Files
 
