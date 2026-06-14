@@ -1,6 +1,34 @@
 mangohud-gtr9-pro ChangeLog
 ===========================
 
+v1.6.1 - 2026-06-14
+-------------------
+
+Documentation accuracy fixes. No conf change.
+
+  * doc: corrected the README description, which said the bar is "built
+    on" `preset=2`; the conf uses the bare `horizontal` directive (no
+    `preset` line), so the text now names that directive and notes it is
+    equivalent to the Horizontal preset. Fixed the "Example output" row,
+    which slash-joined the GPU core and memory clocks (`2901/2400 MHZ`):
+    MangoHud renders `gpu_core_clock` and `gpu_mem_clock` as two
+    separate tokens, so the sample now shows `2901 MHZ  2400 MHZ`.
+    Version badge bumped to 1.6.1.
+  * conf: unchanged. Still 22 active directives, all readout-only.
+
+v1.6.0 - 2026-06-14
+-------------------
+
+Documentation: added an example of the rendered HUD. No conf change.
+
+  * doc: README gains an "Example output" section with a text
+    representation of the horizontal bar plus an embedded PNG
+    (`example.png`) preview; both reflect the current 22-directive
+    layout with sample values. Added the section to the table of
+    contents, added `example.png` to the Files tree, and bumped the
+    version badge to 1.6.0.
+  * conf: unchanged. Still 22 active directives, all readout-only.
+
 v1.5.0 - 2026-06-14
 -------------------
 
