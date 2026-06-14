@@ -1,6 +1,67 @@
 mangohud-gtr9-pro ChangeLog
 ===========================
 
+v1.5.0 - 2026-06-14
+-------------------
+
+Dropped a redundant sensor readout. Still 100% readout-only.
+
+  * conf: removed `gpu_junction_temp`. On this APU (gfx1151) the
+    junction/hotspot sensor mirrors the edge sensor that `gpu_temp`
+    already reports, so it only duplicated the GPU temperature rather
+    than exposing a distinct hotspot value as it does on discrete RDNA
+    cards. GPU temperatures are now `gpu_temp` (edge) + `gpu_mem_temp`
+    (memory). Layout, style, and the single toggle keybind are
+    unchanged. Net 22 active directives, all readout-only.
+  * doc: README description, Metrics table GPU-temp row, and the
+    sensor note updated to reflect the removal and its rationale.
+    Version badge bumped to 1.5.0.
+
+v1.4.0 - 2026-06-14
+-------------------
+
+Trimmed for an effectively all-uppercase readout. Still 100%
+readout-only; no performance or workaround directives.
+
+  * conf: removed `frame_count` (frame counter), and removed
+    `gpu_name`, `vulkan_driver`, and `engine_version`. The latter three
+    are the only free-form strings MangoHud renders in lowercase (e.g.
+    "radv", "vkd3d") and MangoHud has no uppercase/all-caps option, so
+    dropping them leaves a bar whose labels are all uppercase; the only
+    remaining mixed case is MangoHud's fixed unit suffixes (`ms`,
+    `MHz`, `GiB`), which are not configurable. Layout, style, and the
+    single toggle keybind are unchanged. Net 23 active directives, all
+    readout-only.
+  * doc: README Metrics table dropped the removed rows; added a note
+    explaining the omitted identification fields and the uppercase
+    rationale. Version badge bumped to 1.4.0.
+  * Verified against upstream MangoHud master config: no uppercase/
+    capitalization directive exists anywhere in the parameter set.
+
+v1.3.0 - 2026-06-14
+-------------------
+
+Expanded from the lean readout to a diagnostics-oriented set. Still
+100% readout-only; no performance or workaround directives.
+
+  * conf: added ten display metrics. FPS group gains
+    `fps_metrics=avg,1,0.1` (1% / 0.1% lows on the HUD) and
+    `frame_count`. GPU group gains `gpu_junction_temp` and
+    `gpu_mem_temp` (hotspot / memory-side temps; mem temp needs vram),
+    plus `gpu_name`, `vulkan_driver`, and `engine_version` for adapter
+    and driver/engine identification, and `resolution`. CPU group gains
+    `core_load` (per-core). Memory gains `swap` to complete the
+    `vram` + `ram` + `swap` triad. Layout, style, and the single toggle
+    keybind are unchanged. Net 28 active directives, all readout-only.
+  * doc: README reframed from "Minimal" to "Expanded"; the old
+    "Example output" section replaced with a "Metrics" table covering
+    every directive, plus notes on the AMD edge-vs-junction sensor, the
+    vram dependency, and the shared LPDDR5X pool. TOC and version badge
+    bumped to 1.3.0.
+  * Verified against upstream MangoHud master config: all ten additions
+    are in the DISPLAY sections, correctly named, and none come from
+    PERFORMANCE or WORKAROUNDS.
+
 v1.2.0 - 2026-06-14
 -------------------
 
