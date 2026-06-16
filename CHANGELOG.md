@@ -1,5 +1,11 @@
 mangohud-gtr9-pro changelog
 
+1.11.1 (2026-06-15)
+- MangoHud.conf: drop the section banners and blank lines; keep the two-line header and inline comments. No directive, order, or value change.
+
+1.11.0 (2026-06-15)
+- Reorder the bar to GPU, CPU, memory, FPS to match the common horizontal layout (upstream config, Steam Deck preset, GamingOnLinux). Same directives, render order only; README example and metrics table resequenced to match.
+
 1.10.0 (2026-06-15)
 - Add gpu_power, cpu_temp, and fps_metrics=avg,0.01,0.001 (1%/0.1% lows).
 - Drop gpu_mem_clock and swap; neither is useful on this shared-memory APU.
