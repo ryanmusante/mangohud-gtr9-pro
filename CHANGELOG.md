@@ -1,5 +1,17 @@
 mangohud-gtr9-pro changelog
 
+1.10.0 (2026-06-15)
+- Add gpu_power, cpu_temp, and fps_metrics=avg,0.01,0.001 (1%/0.1% lows).
+- Drop gpu_mem_clock and swap; neither is useful on this shared-memory APU.
+- Note in the vram comment that it shows only the small BIOS carveout; ram is the figure to watch.
+- Ship throttling_status and core_load commented-out (opt-in).
+- Active directive count 19 to 20; README resynced to the new set.
+
+1.9.0 (2026-06-15)
+- Bump the MangoHud floor 0.8.3 to 0.8.4 (CachyOS ships 0.8.4; Steam Overlay fix).
+- MangoHud.conf: tidy comments to one-directive-per-line form.
+- README: document the ry-install integration (MANGOHUD=1 auto-enable).
+
 1.8.0 (2026-06-14)
 - Sync docs to MangoHud.conf as the source of truth. The config is a
   plain readout-only bar of 19 directives with no uppercase font, so
