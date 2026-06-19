@@ -1,6 +1,6 @@
 # mangohud-gtr9-pro
 
-[![version](https://img.shields.io/badge/version-1.11.1-blue.svg)](CHANGELOG.md)
+[![version](https://img.shields.io/badge/version-1.11.2-blue.svg)](CHANGELOG.md)
 [![mangohud](https://img.shields.io/badge/mangohud-%E2%89%A5%200.8.4-f5af19.svg)](https://github.com/flightlessmango/MangoHud)
 [![license](https://img.shields.io/badge/license-MIT-green.svg)](#license)
 
@@ -47,7 +47,7 @@ Column spacing, separators, and the engine label before FPS are set by MangoHud 
 | `vram` `ram` | unified LPDDR5X pool: VRAM carveout + RAM |
 | `fps` `frametime` `frame_timing` `fps_metrics` | FPS, frametime, frametime graph, 1% / 0.1% lows |
 
-On this shared-memory APU `vram` shows only the small BIOS carveout, so `ram` is the memory figure to watch. `gpu_mem_clock` and `swap` are left out as they aren't useful here. `throttling_status` and `core_load` are shipped commented-out — uncomment to enable.
+On this shared-memory APU `vram` shows only the small BIOS carveout, so `ram` is the memory figure to watch. `gpu_mem_clock` and `swap` are left out as they aren't useful here.
 
 ## Files
 

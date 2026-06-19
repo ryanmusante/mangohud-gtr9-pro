@@ -2,6 +2,10 @@
 
 All notable changes to this config are recorded here, newest first. Versioning is [Semantic Versioning](https://semver.org); entries follow [Keep a Changelog](https://keepachangelog.com) conventions.
 
+## 1.11.2 (2026-06-19)
+- MangoHud.conf: trim the header to one line, drop the `throttling_status` and `core_load` opt-in stubs, and strip trailing whitespace on the `toggle_hud` line. No active directive, order, or value change; all 20 stay.
+- README: drop the "shipped commented-out — uncomment to enable" note for `throttling_status` and `core_load`, since the stubs are no longer in the config.
+
 ## 1.11.1 (2026-06-16)
 - MangoHud.conf: drop the section banners and blank lines; keep the two-line header and inline comments. No directive, order, or value change.
 
