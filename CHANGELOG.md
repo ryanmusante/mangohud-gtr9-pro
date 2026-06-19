@@ -2,9 +2,14 @@
 
 All notable changes to this config are recorded here, newest first. Versioning is [Semantic Versioning](https://semver.org); entries follow [Keep a Changelog](https://keepachangelog.com) conventions.
 
-## 1.11.2 (2026-06-19)
-- MangoHud.conf: trim the header to one line, drop the `throttling_status` and `core_load` opt-in stubs, and strip trailing whitespace on the `toggle_hud` line. No active directive, order, or value change; all 20 stay.
-- README: drop the "shipped commented-out — uncomment to enable" note for `throttling_status` and `core_load`, since the stubs are no longer in the config.
+## 1.12.1 (2026-06-19)
+- MangoHud.conf: strip all inline comments, keeping only the one-line header. No directive, order, or value change.
+- README: replace the Metrics section with a single Options section documenting all 20 directives in config order; the per-directive descriptions removed from the config now live here.
+
+## 1.12.0 (2026-06-19)
+- Reorder the GPU block to load, clock, temperature, power so it matches the CPU block's load, clock, temperature order. Render order only; same directives and values. README example and metrics table resequenced to match.
+- MangoHud.conf: trim the header to one line, drop the `throttling_status` and `core_load` opt-in stubs, and strip trailing whitespace on the `toggle_hud` line. Active directive count stays 20.
+- README: drop the "shipped commented-out — uncomment to enable" note for the removed stubs.
 
 ## 1.11.1 (2026-06-16)
 - MangoHud.conf: drop the section banners and blank lines; keep the two-line header and inline comments. No directive, order, or value change.

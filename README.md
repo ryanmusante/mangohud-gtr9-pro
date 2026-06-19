@@ -1,6 +1,6 @@
 # mangohud-gtr9-pro
 
-[![version](https://img.shields.io/badge/version-1.11.2-blue.svg)](CHANGELOG.md)
+[![version](https://img.shields.io/badge/version-1.12.1-blue.svg)](CHANGELOG.md)
 [![mangohud](https://img.shields.io/badge/mangohud-%E2%89%A5%200.8.4-f5af19.svg)](https://github.com/flightlessmango/MangoHud)
 [![license](https://img.shields.io/badge/license-MIT-green.svg)](#license)
 
@@ -33,19 +33,37 @@ Under [ry-install](https://github.com/ryanmusante/ry-install) this config is dep
 Illustrative — element order only, not exact runtime formatting:
 
 ```
-GPU 96% 74°C 2901 MHz 119 W  CPU 38% 4102 MHz 61°C  VRAM 0.5 GiB  RAM 13.2 GiB  FPS 142 8.5 ms (1% 98 · 0.1% 71)
+GPU 96% 2901 MHz 74°C 119 W  CPU 38% 4102 MHz 61°C  VRAM 0.5 GiB  RAM 13.2 GiB  FPS 142 8.5 ms (1% 98 · 0.1% 71)
 ```
 
 Column spacing, separators, and the engine label before FPS are set by MangoHud at runtime; only the element order is fixed by the config.
 
-## Metrics
+## Options
 
-| Directives | Shows |
+Every directive in the config, in file order:
+
+| Directive | Effect |
 |---|---|
-| `gpu_stats` `gpu_temp` `gpu_core_clock` `gpu_power` | GPU load, edge temperature, core clock, package power |
-| `cpu_stats` `cpu_mhz` `cpu_temp` | CPU load, frequency, temperature |
-| `vram` `ram` | unified LPDDR5X pool: VRAM carveout + RAM |
-| `fps` `frametime` `frame_timing` `fps_metrics` | FPS, frametime, frametime graph, 1% / 0.1% lows |
+| `horizontal` | single top-of-screen row |
+| `legacy_layout=0` | render in the element order written in the config |
+| `position=top-left` | bar location; `top-center` or `top-right` to move along the edge |
+| `gpu_stats` | GPU load % |
+| `gpu_core_clock` | GPU core clock |
+| `gpu_temp` | GPU edge temperature |
+| `gpu_power` | GPU package power, watts |
+| `cpu_stats` | CPU load % |
+| `cpu_mhz` | CPU frequency (highest active core) |
+| `cpu_temp` | CPU temperature |
+| `vram` | GPU VRAM (BIOS UMA carveout only, not the full pool) |
+| `ram` | CPU-side usage of the shared pool |
+| `fps` | current frame rate |
+| `frametime` | frametime in ms, inline with FPS |
+| `frame_timing` | frametime line graph |
+| `fps_metrics=avg,0.01,0.001` | average + 1% + 0.1% low FPS |
+| `font_size=20` | HUD text size |
+| `background_alpha=0.4` | HUD backdrop opacity (0 transparent, 1 opaque) |
+| `text_outline` | outline glyphs for contrast over bright scenes |
+| `toggle_hud=Shift_R+F12` | show / hide the overlay |
 
 On this shared-memory APU `vram` shows only the small BIOS carveout, so `ram` is the memory figure to watch. `gpu_mem_clock` and `swap` are left out as they aren't useful here.
 
