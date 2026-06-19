@@ -4,7 +4,7 @@
 [![mangohud](https://img.shields.io/badge/mangohud-%E2%89%A5%200.8.4-f5af19.svg)](https://github.com/flightlessmango/MangoHud)
 [![license](https://img.shields.io/badge/license-MIT-green.svg)](#license)
 
-Readout-only MangoHud config for the Beelink GTR9 Pro (Radeon 8060S / Strix Halo) on CachyOS Wayland with RADV. A single horizontal top bar, left to right: GPU load with clock, edge temperature and power; CPU load with frequency and temperature; the unified memory pool (`vram` + `ram`); then FPS with frametime, a frametime graph and 1%/0.1% lows. Display-only — nothing changes frame pacing or rendering.
+Readout-only MangoHud config for the Beelink GTR9 Pro (Radeon 8060S / Strix Halo) on CachyOS Wayland with RADV. A single horizontal top bar, left to right: GPU load with clock, edge temperature and power; CPU load with frequency and temperature; the unified memory pool (`vram` + `ram`); then FPS with frametime, a frametime graph and 1% / 0.1% lows. Display-only — nothing changes frame pacing or rendering.
 
 `legacy_layout=0` keeps the on-screen order identical to the config.
 
@@ -45,9 +45,9 @@ Column spacing, separators, and the engine label before FPS are set by MangoHud 
 | `gpu_stats` `gpu_temp` `gpu_core_clock` `gpu_power` | GPU load, edge temperature, core clock, package power |
 | `cpu_stats` `cpu_mhz` `cpu_temp` | CPU load, frequency, temperature |
 | `vram` `ram` | unified LPDDR5X pool: VRAM carveout + RAM |
-| `fps` `frametime` `frame_timing` `fps_metrics` | FPS, frametime, frametime graph, 1%/0.1% lows |
+| `fps` `frametime` `frame_timing` `fps_metrics` | FPS, frametime, frametime graph, 1% / 0.1% lows |
 
-On this shared-memory APU `vram` shows only the small BIOS carveout, so `ram` is the memory figure to watch. `gpu_mem_clock` and `swap` are left out as they aren't useful here. `throttling_status` and `core_load` are included but commented out — uncomment to enable.
+On this shared-memory APU `vram` shows only the small BIOS carveout, so `ram` is the memory figure to watch. `gpu_mem_clock` and `swap` are left out as they aren't useful here. `throttling_status` and `core_load` are shipped commented-out — uncomment to enable.
 
 ## Files
 
