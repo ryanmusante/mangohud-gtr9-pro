@@ -2,6 +2,11 @@
 
 Notable changes, newest first. Versioning follows SemVer.
 
+1.14.0 (2026-06-27)
+- Restore lockstep with ry-install's embedded config: re-add toggle_hud=Shift_R+F12, gpu_power, text_outline, and a commented # cpu_temp stub. The 1.13.0 reconcile dropped these, but the installer still ships them; this realigns to the installer as source of truth.
+- Config now 18 active directives plus one commented stub.
+- README: add gpu_power, text_outline, and the commented cpu_temp to the Options table; restore power to the GPU block and the temp/power readout in the example; note toggle_hud is now set explicitly.
+
 1.13.0 (2026-06-22)
 - Reconcile config to the layout deployed by ry-install: FPS-first order, 16 directives.
 - Drop gpu_power, cpu_temp, fps_metrics, text_outline, toggle_hud (Shift_R+F12 stays via MangoHud default).
