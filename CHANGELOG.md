@@ -2,6 +2,10 @@
 
 Notable changes, newest first. Versioning follows SemVer.
 
+1.15.0 (2026-07-03)
+- Activate cpu_temp: uncomment the directive to match ry-install, which toggled cpu_temp on (installer 7.73.0–7.76.1) but whose config the 1.14.0 reconcile re-added only as a commented stub. Config now 19 active directives, no commented stubs.
+- README: change the cpu_temp Options row from commented to active; add CPU temperature to the intro CPU block and the example; drop the "omitted by default" note.
+
 1.14.0 (2026-06-27)
 - Restore lockstep with ry-install's embedded config: re-add toggle_hud=Shift_R+F12, gpu_power, text_outline, and a commented # cpu_temp stub. The 1.13.0 reconcile dropped these, but the installer still ships them; this realigns to the installer as source of truth.
 - Config now 18 active directives plus one commented stub.
