@@ -79,63 +79,31 @@ Notable changes, newest first. Versioning follows SemVer.
 
 # 1.9.0 - 2026-06-15
 
-  * Bump MangoHud floor 0.8.3 to 0.8.4 (Steam Overlay fix).
-  * Document the ry-install MANGOHUD=1 auto-enable integration.
+  Consolidated 1.0.0 through 1.9.0 (2026-05-10 to 2026-06-15), the
+  initial development series, newest first:
 
-# 1.8.0 - 2026-06-14
-
+  * Bump MangoHud floor 0.8.3 to 0.8.4 (Steam Overlay fix); document
+    the ry-install MANGOHUD=1 auto-enable integration.
   * Sync docs to MangoHud.conf as source of truth; readout-only bar,
-    19 directives.
-  * Drop bundled uppercase font, font_file step, and license
-    carve-out.
-  * Remove example.png; replace with a text sketch of element order.
-
-# 1.6.2 - 2026-06-14
-
-  * Re-render example.png in one font, size, color.
-
-# 1.6.1 - 2026-06-14
-
-  * Doc fixes: name horizontal directive; split GPU core and memory
-    clocks.
-
-# 1.6.0 - 2026-06-14
-
-  * Add example-output section and example.png preview.
-
-# 1.5.0 - 2026-06-14
-
+    19 directives. Drop bundled uppercase font, font_file step, and
+    license carve-out. Remove example.png in favour of a text sketch
+    of element order.
+  * 1.7.0 skipped; no release published. Recorded so history has no
+    gap.
+  * Add an example-output section and example.png preview, re-rendered
+    in one font, size, and color; name the horizontal directive and
+    split GPU core and memory clocks in the docs.
   * Remove gpu_junction_temp; hotspot mirrors the edge value gpu_temp
     reports.
-
-# 1.4.0 - 2026-06-14
-
   * Remove frame_count, gpu_name, vulkan_driver, engine_version.
-
-# 1.3.0 - 2026-06-14
-
-  * Expand to a diagnostics set: fps_metrics, memory temps, core_load,
-    resolution, swap, adapter/driver IDs.
-
-# 1.2.0 - 2026-06-14
-
+  * Briefly expand to a diagnostics set (fps_metrics, memory temps,
+    core_load, resolution, swap, adapter/driver IDs) before trimming
+    back.
   * Remove throttling_status and throttling_status_graph.
-
-# 1.1.0 - 2026-06-03
-
   * Switch to a horizontal top bar trimmed to the common gamer layout
     with temps.
-
-# 1.0.2 - 2026-05-16
-
   * Minimise from 87 to 17 directives, aligned with typical CachyOS
-    configs.
-
-# 1.0.1 - 2026-05-10
-
-  * Resync to MangoHud 0.8.3 directive forms; README to GitHub style.
-
-# 1.0.0 - 2026-05-10
-
+    configs; resync to MangoHud 0.8.3 directive forms and move the
+    README to GitHub style.
   * Initial release: horizontal bar for Strix Halo on CachyOS Wayland
     and RADV.

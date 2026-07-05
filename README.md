@@ -62,7 +62,7 @@ Every directive in the config, in file order:
 | `text_outline` | outline glyphs for legibility over bright frames |
 | `background_alpha=0.4` | HUD backdrop opacity (0 transparent, 1 opaque) |
 
-On this shared-memory APU `vram` shows only the small BIOS carveout, so `ram` is the figure to watch. `legacy_layout=0` keeps the on-screen order identical to the config. Only `gpu_temp` is shown: the GPU is the thermal-limited part on Strix Halo, and its edge reading is the temperature that matters. `cpu_temp` is left commented because the sensor is not reported on this platform; `cpu_power` covers the CPU-side draw instead.
+On this shared-memory APU `vram` shows only the small BIOS carveout, so `ram` is the figure to watch. `legacy_layout=0` keeps the on-screen order identical to the config. Only `gpu_temp` is shown: the GPU is the thermal-limited part on Strix Halo, and its edge reading is the temperature that matters. `cpu_temp` is left commented because MangoHud's CPU-temperature readout didn't report reliably on this unit (the `k10temp` Tctl sensor is present but MangoHud may not pick it up depending on kernel and hwmon layout); `cpu_power` covers the CPU side instead. Uncomment `cpu_temp` and check whether it renders on your kernel.
 
 ## License
 
