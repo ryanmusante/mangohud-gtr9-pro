@@ -1,10 +1,10 @@
 # mangohud-gtr9-pro
 
-[![version](https://img.shields.io/badge/version-1.15.0-blue.svg)](CHANGELOG.md)
+[![version](https://img.shields.io/badge/version-1.17.0-blue.svg)](CHANGELOG.md)
 [![mangohud](https://img.shields.io/badge/mangohud-%E2%89%A5%200.8.4-f5af19.svg)](https://github.com/flightlessmango/MangoHud)
 [![license](https://img.shields.io/badge/license-MIT-green.svg)](#license)
 
-Readout-only MangoHud config for the Beelink GTR9 Pro (Radeon 8060S / Strix Halo) on CachyOS Wayland with RADV. A single horizontal top bar, left to right: FPS with frametime and graph, GPU load with clock, temperature and power, CPU load with temperature and frequency, then the unified memory pool (`vram` + `ram`). Display-only — nothing changes frame pacing or rendering.
+Readout-only MangoHud config for the Beelink GTR9 Pro (Radeon 8060S / Strix Halo) on CachyOS Wayland with RADV. A single horizontal top bar, left to right: FPS with frametime and graph, GPU load with temperature, clock and power, CPU load with frequency and power, then the unified memory pool (`vram` + `ram`). Display-only — nothing changes frame pacing or rendering.
 
 This is the layout deployed by [ry-install](https://github.com/ryanmusante/ry-install); the repo config and the installer's embedded config are kept in lockstep.
 
@@ -33,7 +33,7 @@ Under ry-install the config is deployed automatically and the overlay is enabled
 Illustrative — element order only, not exact runtime formatting:
 
 ```
-FPS 142 8.5 ms  GPU 96% 2901 MHz 74°C 102 W  CPU 38% 61°C 4102 MHz  VRAM 0.5 GiB  RAM 13.2 GiB
+FPS 142 8.5 ms  GPU 96% 74°C 2901 MHz 102 W  CPU 38% 4102 MHz 42 W  VRAM 0.5 GiB  RAM 13.2 GiB
 ```
 
 ## Options
@@ -50,19 +50,19 @@ Every directive in the config, in file order:
 | `frametime` | frametime in ms, inline with FPS |
 | `frame_timing` | frametime line graph |
 | `gpu_stats` | GPU load % |
-| `gpu_core_clock` | GPU core clock |
 | `gpu_temp` | GPU edge temperature |
+| `gpu_core_clock` | GPU core clock |
 | `gpu_power` | GPU package power draw (W) |
 | `cpu_stats` | CPU load % |
-| `cpu_temp` | CPU package temperature |
 | `cpu_mhz` | CPU frequency (highest active core) |
+| `cpu_power` | CPU package power draw (W) |
 | `vram` | GPU VRAM (BIOS UMA carveout only, not the full pool) |
 | `ram` | CPU-side usage of the shared pool |
 | `font_size=20` | HUD text size |
 | `text_outline` | outline glyphs for legibility over bright frames |
 | `background_alpha=0.4` | HUD backdrop opacity (0 transparent, 1 opaque) |
 
-On this shared-memory APU `vram` shows only the small BIOS carveout, so `ram` is the figure to watch. `legacy_layout=0` keeps the on-screen order identical to the config. Both `gpu_temp` and `cpu_temp` are shown; the GPU is the thermal-limited part on Strix Halo, but the CPU temperature is kept on the bar for a full thermal picture.
+On this shared-memory APU `vram` shows only the small BIOS carveout, so `ram` is the figure to watch. `legacy_layout=0` keeps the on-screen order identical to the config. Only `gpu_temp` is shown: the GPU is the thermal-limited part on Strix Halo, and its edge reading is the temperature that matters. `cpu_temp` is left commented because the sensor is not reported on this platform; `cpu_power` covers the CPU-side draw instead.
 
 ## License
 
