@@ -90,10 +90,6 @@ Notable changes, newest first. Versioning follows SemVer.
     carve-out.
   * Remove example.png; replace with a text sketch of element order.
 
-# 1.7.0
-
-  * Skipped; no release published. Recorded so history has no gap.
-
 # 1.6.2 - 2026-06-14
 
   * Re-render example.png in one font, size, color.
