@@ -2,6 +2,44 @@
 
 Notable changes, newest first. Versioning follows SemVer.
 
+# 1.20.0 - 2026-07-12
+
+  * Enable cpu_temp and pin it with cpu_custom_temp_sensor=k10temp,
+    temp1_input. The CPU package temperature (k10temp Tctl) reports on
+    this platform under kernel 6.14+, but on CachyOS MangoHud can
+    otherwise select a motherboard/EC sensor and show a wrong value;
+    the explicit hwmon name,input pair forces the correct channel.
+    This retires the previously commented-out cpu_temp stub.
+  * Correct the vram note. MangoHud detects the APU and adds the GTT
+    pool to the BIOS carveout, so vram already reports true unified
+    GPU memory usage, not just the fixed carveout. Reword the intro,
+    the Options table row, and the closing notes to match, and update
+    the example figure accordingly.
+  * README: state the RADV floor as Mesa 24.1, where gfx1151 support
+    landed, rather than a bare 24; keep kernel 6.14 as the metrics
+    floor but note 6.18.4+ is preferred for gfx1151 stability. Add
+    cpu_temp and cpu_custom_temp_sensor to the Options table and the
+    example bar.
+
+# 1.19.0 - 2026-07-12
+
+  * README: correct the vram note. Earlier text called the readout a
+    fixed BIOS carveout; on this APU the driver reports a UMA VRAM
+    pool via mem_info_vram_used, and the separate GTT pool the driver
+    tracks has no MangoHud display directive. Reword the intro line
+    and the Options table row to match, and keep ram as the figure to
+    watch for overall memory pressure. Config unchanged.
+
+# 1.18.0 - 2026-07-12
+
+  * Group MangoHud.conf into labelled sections — Layout, Control, FPS,
+    GPU, CPU, Memory, Style — separated by blank lines, so the file's
+    blocks are legible at a glance. The active directive sequence and
+    every value are unchanged from 1.17.0; this is presentation only.
+  * README: add the section names to the Options table as a leading
+    column and note the grouped structure in the intro to that
+    section.
+
 # 1.17.0 - 2026-07-04
 
   * Reorder both blocks to temp-first: GPU is now load, temp, clock,
