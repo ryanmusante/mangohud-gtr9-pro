@@ -1,21 +1,30 @@
 # mangohud-gtr9-pro
 
-[![version](https://img.shields.io/badge/version-1.20.0-blue.svg)](CHANGELOG.md)
-[![mangohud](https://img.shields.io/badge/mangohud-%E2%89%A5%200.8.4-f5af19.svg)](https://github.com/flightlessmango/MangoHud)
-[![license](https://img.shields.io/badge/license-MIT-green.svg)](#license)
+**Version 1.18.1** · [Changelog](CHANGELOG.md)
 
-Readout-only MangoHud config for the Beelink GTR9 Pro (Radeon 8060S / Strix Halo) on CachyOS Wayland with RADV. A single horizontal top bar, left to right: FPS with frametime and graph, GPU load with temperature, clock and power, CPU load with temperature, frequency and power, then the unified memory pool (`vram` + `ram`). Display-only — nothing changes frame pacing or rendering.
+Readout-only [MangoHud](https://github.com/flightlessmango/MangoHud) config for the Beelink GTR9 Pro (Ryzen AI Max+ 395 / gfx1151 / Strix Halo) on CachyOS Wayland with RADV. 19 directives, one horizontal top bar, display-only — nothing here changes frame pacing, rendering, or power state.
 
-This is the layout deployed by [ry-install](https://github.com/ryanmusante/ry-install); the repo config and the installer's embedded config are kept in lockstep.
+## Quick Start
 
-## Install
-
-Needs MangoHud >= 0.8.4, kernel >= 6.14 (6.18.4+ preferred for gfx1151 stability), RADV (Mesa >= 24.1, where gfx1151 landed).
+> [!NOTE]
+> Under [ry-install](https://github.com/ryanmusante/ry-install) this file is a managed destination and is already deployed. Copy it by hand only outside that setup.
 
 ```fish
 mkdir -p ~/.config/MangoHud
 cp ./MangoHud.conf ~/.config/MangoHud/
 ```
+
+## Requirements
+
+| Component | Floor | Reason |
+|---|---|---|
+| MangoHud | `0.8.4` | Steam Overlay coexistence fix — Vulkan layer procaddr and trampolining |
+| MangoHud | `0.8.2` | `gpu_metrics` v3_0 parsing — the APU path behind every readout here |
+| Mesa / RADV | `24.1` | first release with gfx1151 RadeonSI and RADV enablement |
+| Kernel | `6.14` | amdgpu gfx1151 support and stable `gpu_metrics` v3_0 export |
+| Session | Wayland or X11 | keybinds work on both; Wayland is the deployed target |
+
+CachyOS ships `mangohud` at `0.8.4-1.1`, so the repository default satisfies every floor. Under ry-install, `mangohud` and `lib32-mangohud` arrive as dependencies of `cachyos-gaming-applications`, which is in the installer's `PKGS_ADD` — no separate install step.
 
 ## Usage
 
@@ -24,50 +33,111 @@ mangohud %command%
 gamemoderun mangohud %command%
 ```
 
-Toggle with `Shift_R + F12` (set explicitly via `toggle_hud`). Move the bar with `position=top-center` or `top-right`.
+Under ry-install the overlay is enabled for every Vulkan app through `MANGOHUD=1` in `~/.config/environment.d/10-environment.conf`, so the prefix is optional. Toggle the HUD with `Shift_R+F12`. Move the bar by editing `position=` — `top-center`, `top-right`, `middle-left`, `middle-right`, `bottom-left`, `bottom-center`, `bottom-right`. Changes apply at the next application launch; no service restart and no session logout.
 
-Under ry-install the config is deployed automatically and the overlay is enabled for all Vulkan apps via `MANGOHUD=1`, so the `mangohud %command%` prefix is optional.
+## Bar Layout
 
-## Example
-
-Illustrative — element order only, not exact runtime formatting:
+One horizontal row, top-left. Both blocks read load, temperature, clock, power; `cpu_temp` is the only empty slot ([Deliberate Omissions](#deliberate-omissions)). Illustrative — element order only, not exact runtime formatting.
 
 ```
-FPS 142 8.5 ms  GPU 96% 74°C 2901 MHz 102 W  CPU 38% 61°C 4102 MHz 42 W  VRAM 6.8 GiB  RAM 13.2 GiB
+FPS 142  8.5 ms  [graph]  GPU 96% 74°C 2901 MHz 102 W  CPU 38% 4102 MHz 42 W  VRAM 0.5 GiB  RAM 13.2 GiB
 ```
 
-## Options
+## Directives
 
-The config is grouped into labelled sections — Layout, Control, FPS, GPU, CPU, Memory, Style — and renders in that order. Every directive, in file order:
+In file order. **Default** marks a directive whose value equals MangoHud's own default, kept explicit so the file is self-describing and immune to upstream default changes — 7 of 19. The rest are overrides.
 
-| Section | Directive | Effect |
+| # | Directive | Default | Effect |
+|---|---|---|---|
+| 1 | `horizontal` | no | single top-of-screen row instead of the stacked block |
+| 2 | `legacy_layout=0` | no | render strictly in config element order |
+| 3 | `position=top-left` | yes | bar location |
+| 4 | `toggle_hud=Shift_R+F12` | yes | show and hide bind |
+| 5 | `fps` | yes | current frame rate |
+| 6 | `frametime` | no | frametime in ms, inline with FPS |
+| 7 | `frame_timing` | yes | frametime line graph |
+| 8 | `gpu_stats` | yes | GPU load percent |
+| 9 | `gpu_temp` | no | GPU temperature |
+| 10 | `gpu_core_clock` | no | GPU core clock |
+| 11 | `gpu_power` | no | GPU power draw in watts |
+| 12 | `cpu_stats` | yes | CPU load percent |
+| — | `# cpu_temp` | — | commented stub, slot 2 of the CPU block |
+| 13 | `cpu_mhz` | no | CPU frequency, highest active core |
+| 14 | `cpu_power` | no | CPU power draw in watts |
+| 15 | `vram` | no | GPU VRAM usage |
+| 16 | `ram` | no | system RAM usage |
+| 17 | `font_size=20` | no | upstream default is `24` |
+| 18 | `text_outline` | yes | outline glyphs for legibility over bright frames |
+| 19 | `background_alpha=0.4` | no | backdrop opacity, `0.0` to `1.0`; upstream default is `0.5` |
+
+`fps`, `frame_timing`, `cpu_stats` and `gpu_stats` are on by default upstream and can only be turned off with `=0`; listing them is documentation, not activation.
+
+The file carries no header comment and no blank lines — bare directives plus the one commented stub. Comment syntax is `#` at line start.
+
+## Sensor Sources
+
+Strix Halo is an APU, so MangoHud takes its APU code paths. Every GPU figure and the CPU power figure come from one file, `/sys/class/drm/card*/device/gpu_metrics` at format revision 3 — not from hwmon. Verified against MangoHud `v0.8.4` sources, `src/amdgpu.cpp` and `src/cpu.cpp`.
+
+| Field | Source | Exact value |
 |---|---|---|
-| Layout | `horizontal` | single top-of-screen row |
-| Layout | `legacy_layout=0` | render in config element order |
-| Layout | `position=top-left` | bar location; `top-center` / `top-right` to move |
-| Control | `toggle_hud=Shift_R+F12` | explicit show/hide bind (MangoHud's default key) |
-| FPS | `fps` | current frame rate |
-| FPS | `frametime` | frametime in ms, inline with FPS |
-| FPS | `frame_timing` | frametime line graph |
-| GPU | `gpu_stats` | GPU load % |
-| GPU | `gpu_temp` | GPU edge temperature |
-| GPU | `gpu_core_clock` | GPU core clock |
-| GPU | `gpu_power` | GPU package power draw (W) |
-| CPU | `cpu_stats` | CPU load % |
-| CPU | `cpu_temp` | CPU package temperature (Tctl) |
-| CPU | `cpu_custom_temp_sensor=k10temp,temp1_input` | pin CPU temp to the k10temp Tctl input |
-| CPU | `cpu_mhz` | CPU frequency (highest active core) |
-| CPU | `cpu_power` | CPU package power draw (W) |
-| Memory | `vram` | GPU memory in use; on this APU, BIOS carveout plus GTT combined (true unified GPU usage) |
-| Memory | `ram` | CPU-side usage of the shared pool |
-| Style | `font_size=20` | HUD text size |
-| Style | `text_outline` | outline glyphs for legibility over bright frames |
-| Style | `background_alpha=0.4` | HUD backdrop opacity (0 transparent, 1 opaque) |
+| `fps`, `frametime`, `frame_timing` | swapchain present timing | driver-independent |
+| `gpu_stats` | `gpu_metrics` v3_0 | `average_gfx_activity` |
+| `gpu_temp` | `gpu_metrics` v3_0 | `temperature_gfx / 100` — GFX die, not an edge sensor |
+| `gpu_core_clock` | `gpu_metrics` v3_0 | `average_gfxclk_frequency` — interval average |
+| `gpu_power` | `gpu_metrics` v3_0 | `average_gfx_power / 1000` — GFX rail, not APU package |
+| `cpu_stats` | `/proc/stat` | aggregate jiffy deltas |
+| `cpu_mhz` | `cpufreq/scaling_cur_freq` | per core, max of set; served by `amd-pstate-epp` here |
+| `cpu_power` | `gpu_metrics` v3_0 | `average_apu_power - average_gfx_power`, clamped at 0 |
+| `vram` | amdgpu sysfs | `mem_info_vram_used` over `mem_info_vram_total` |
+| `ram` | `/proc/meminfo` | `MemTotal` minus `MemAvailable` |
 
-On this shared-memory APU `vram` reports true unified GPU memory usage: MangoHud detects the APU and adds the GTT pool to the BIOS carveout, so the figure tracks real GPU allocation rather than just the small fixed carveout. `ram` shows system memory separately. `legacy_layout=0` keeps the on-screen order identical to the config.
+**`ram` is the memory figure to watch** — on a unified-memory part `vram` reports the small BIOS carveout, not the pool a game draws from. **`gpu_temp` and `gpu_power` do not sum to a package figure** — `temperature_soc` and `average_apu_power` sit in the same struct but no directive in this config exposes them.
 
-`cpu_temp` shows the CPU package temperature (the `k10temp` Tctl channel). On CachyOS, MangoHud can otherwise latch onto a motherboard/EC sensor and report the wrong value, so `cpu_custom_temp_sensor=k10temp,temp1_input` pins it to the correct hwmon input; adjust the `hwmon_name,input` pair if `sensors` shows a different layout on your unit. `gpu_temp` is the GPU edge reading — the thermal-limited part on Strix Halo — and `cpu_power` / `gpu_power` cover package draw on each side.
+**`cpu_power` does not use RAPL here.** MangoHud's selection order is hwmon (`k10temp`, `zenpower`, `zenergy`, `apm_xgene`), then the amdgpu APU metric, then powercap RAPL. On Zen 5 `k10temp` exposes temperature inputs only — no `Pcore` or `Psoc`, no `Vcore` or `Icore` — so its initializer returns null and the APU metric wins. Making `energy_uj` world-readable is not required on this box.
+
+**`cpu_custom_temp_sensor` is inert here.** It steers only the hwmon file lookup, and `UpdateCpuTemp()` short-circuits to `gpu_metrics` on any APU before that file is read. It cannot correct a CPU temperature reading on this hardware.
+
+## Deliberate Omissions
+
+Not oversights. Each shipped at some point and was removed for the stated reason; measure before re-adding.
+
+| Directive | Reason |
+|---|---|
+| `cpu_temp` | [MangoHud #1794](https://github.com/flightlessmango/MangoHud/issues/1794), open since 2025-09-04 — see below |
+| `gpu_junction_temp` | hotspot mirrors what `gpu_temp` already reports |
+| `gpu_mem_clock` | UMA part — memory clock is system memory clock, not a GPU-side lever |
+| `swap` | no meaningful swap pressure under the zram configuration deployed here |
+| `fps_metrics` | 1% and 0.1% lows are a benchmarking readout, not a play-time one |
+| `throttling_status`, `throttling_status_graph` | v3_0 exposes delta counters for temperature and power only, with no current or other class, so the display is partial |
+| `frame_count`, `gpu_name`, `vulkan_driver`, `engine_version` | static or near-static; consume bar width for no live signal |
+
+> [!WARNING]
+> \#1794 reports that on Zen 5, enabling `cpu_temp` drives `cpu_power` to 0. It was filed from a discrete-GPU desktop reading `cpu_power` from RAPL — a different source than this machine uses. The mechanism is therefore **untested on the `gpu_metrics` path**. The stub stays commented to hold parity with the installer, not because the coupling is confirmed here. Uncomment `cpu_temp` on its own line and check whether `cpu_power` still reports non-zero before concluding either way.
+
+## Lockstep
+
+The installer's embedded generator is the source of truth. Divergence in the directive set is a defect in this repository, not in the installer; reconcile toward the installer.
+
+| Property | Value |
+|---|---|
+| Installer baseline | `7.141.0` |
+| Generator | `_content_HOME_.config_MangoHud_MangoHud.conf` |
+| Managed destination | `~/.config/MangoHud/MangoHud.conf`, mode `0600` |
+| Post-hook tag | `mangohud` — announces that the change applies at next launch |
+| Format validator | `_grep_mangohud_entry` — needs one bareword or `key=value` directive |
+| Runtime check | `--verify` greps the deployed file for `fps` |
+| Directive parity | 19/19 identical in set and order |
+| Comment delta | 2 lines — this repository omits the installer's header comment and shortens the `cpu_temp` stub |
+
+## Verify
+
+```fish
+diff (string match -rv '^#' < ~/.config/MangoHud/MangoHud.conf | psub) \
+     (string match -rv '^#' < ./MangoHud.conf | psub)
+```
+
+An empty `diff` means the deployed file and this repository agree on every active directive. Byte 3 of `/sys/class/drm/card*/device/gpu_metrics` is the format revision and should read `3` on this hardware.
 
 ## License
 
-MIT.
+MIT — see [LICENSE](LICENSE).
