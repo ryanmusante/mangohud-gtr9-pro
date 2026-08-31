@@ -4,6 +4,20 @@ Changes for mangohud-gtr9-pro
 Newest first. Versioning is MAJOR.MINOR.PATCH.
 
 
+1.19.0
+------
+
+  - conf: comment cpu_stats for installer parity; 18 active directives
+    plus commented cpu_stats and cpu_temp stubs
+  - conf: cpu_stats is an upstream default that only =0 disables, so
+    CPU load percent still renders
+  - readme: re-pin the installer baseline from 7.141.0 to 7.193.0
+  - readme: record the installer split; ry-install.fish deploys and
+    ry-verify.fish checks, sharing one generator body
+  - readme: resync the directive table, stub rows and default count to
+    the 18-directive set
+
+
 1.18.1
 ------
 

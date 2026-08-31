@@ -1,8 +1,8 @@
 # mangohud-gtr9-pro
 
-**Version 1.18.1** · [Changelog](CHANGELOG.md)
+**Version 1.19.0** · [Changelog](CHANGELOG.md)
 
-Readout-only [MangoHud](https://github.com/flightlessmango/MangoHud) config for the Beelink GTR9 Pro (Ryzen AI Max+ 395 / gfx1151 / Strix Halo) on CachyOS Wayland with RADV. 19 directives, one horizontal top bar, display-only — nothing here changes frame pacing, rendering, or power state.
+Readout-only [MangoHud](https://github.com/flightlessmango/MangoHud) config for the Beelink GTR9 Pro (Ryzen AI Max+ 395 / gfx1151 / Strix Halo) on CachyOS Wayland with RADV. 18 directives, one horizontal top bar, display-only — nothing here changes frame pacing, rendering, or power state.
 
 ## Quick Start
 
@@ -45,7 +45,7 @@ FPS 142  8.5 ms  [graph]  GPU 96% 74°C 2901 MHz 102 W  CPU 38% 4102 MHz 42 W  V
 
 ## Directives
 
-In file order. **Default** marks a directive whose value equals MangoHud's own default, kept explicit so the file is self-describing and immune to upstream default changes — 7 of 19. The rest are overrides.
+In file order. **Default** marks a directive whose value equals MangoHud's own default, kept explicit so the file is self-describing and immune to upstream default changes — 6 of 18. The rest are overrides.
 
 | # | Directive | Default | Effect |
 |---|---|---|---|
@@ -60,19 +60,19 @@ In file order. **Default** marks a directive whose value equals MangoHud's own d
 | 9 | `gpu_temp` | no | GPU temperature |
 | 10 | `gpu_core_clock` | no | GPU core clock |
 | 11 | `gpu_power` | no | GPU power draw in watts |
-| 12 | `cpu_stats` | yes | CPU load percent |
+| — | `# cpu_stats` | — | commented stub, slot 1 of the CPU block; load still renders |
 | — | `# cpu_temp` | — | commented stub, slot 2 of the CPU block |
-| 13 | `cpu_mhz` | no | CPU frequency, highest active core |
-| 14 | `cpu_power` | no | CPU power draw in watts |
-| 15 | `vram` | no | GPU VRAM usage |
-| 16 | `ram` | no | system RAM usage |
-| 17 | `font_size=20` | no | upstream default is `24` |
-| 18 | `text_outline` | yes | outline glyphs for legibility over bright frames |
-| 19 | `background_alpha=0.4` | no | backdrop opacity, `0.0` to `1.0`; upstream default is `0.5` |
+| 12 | `cpu_mhz` | no | CPU frequency, highest active core |
+| 13 | `cpu_power` | no | CPU power draw in watts |
+| 14 | `vram` | no | GPU VRAM usage |
+| 15 | `ram` | no | system RAM usage |
+| 16 | `font_size=20` | no | upstream default is `24` |
+| 17 | `text_outline` | yes | outline glyphs for legibility over bright frames |
+| 18 | `background_alpha=0.4` | no | backdrop opacity, `0.0` to `1.0`; upstream default is `0.5` |
 
-`fps`, `frame_timing`, `cpu_stats` and `gpu_stats` are on by default upstream and can only be turned off with `=0`; listing them is documentation, not activation.
+`fps`, `frame_timing` and `gpu_stats` are on by default upstream and can only be turned off with `=0`; listing them is documentation, not activation. `cpu_stats` is in that same class but is commented here to hold parity with the installer — CPU load percent still renders.
 
-The file carries no header comment and no blank lines — bare directives plus the one commented stub. Comment syntax is `#` at line start.
+The file carries no header comment and no blank lines — bare directives plus the two commented stubs. Comment syntax is `#` at line start.
 
 ## Sensor Sources
 
@@ -116,18 +116,18 @@ Not oversights. Each shipped at some point and was removed for the stated reason
 
 ## Lockstep
 
-The installer's embedded generator is the source of truth. Divergence in the directive set is a defect in this repository, not in the installer; reconcile toward the installer.
+The installer's embedded generator is the source of truth. Divergence in the directive set is a defect in this repository, not in the installer; reconcile toward the installer. Since `7.190.0` the installer ships as a pair — [ry-install](https://github.com/ryanmusante/ry-install) deploys and [ry-verify](https://github.com/ryanmusante/ry-verify) checks — and the generator body is byte-identical in both, so either script pins this file.
 
 | Property | Value |
 |---|---|
-| Installer baseline | `7.141.0` |
+| Installer baseline | `7.193.0` |
 | Generator | `_content_HOME_.config_MangoHud_MangoHud.conf` |
 | Managed destination | `~/.config/MangoHud/MangoHud.conf`, mode `0600` |
 | Post-hook tag | `mangohud` — announces that the change applies at next launch |
 | Format validator | `_grep_mangohud_entry` — needs one bareword or `key=value` directive |
-| Runtime check | `--verify` greps the deployed file for `fps` |
-| Directive parity | 19/19 identical in set and order |
-| Comment delta | 2 lines — this repository omits the installer's header comment and shortens the `cpu_temp` stub |
+| Runtime check | `--verify` in `ry-verify.fish` — greps the deployed file for `fps` |
+| Directive parity | 18/18 identical in set and order |
+| Comment delta | 2 lines — this repository omits the installer's header comment and its inert-sensor note, and carries both stubs bare |
 
 ## Verify
 
